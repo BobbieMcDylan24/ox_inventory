@@ -1,22 +1,33 @@
-$mainColor: #081628;
-$textColor: #c9ebff;
-$mainFont: Roboto;
+// ── Design tokens ────────────────────────────────────────────────────────────
+$mainColor: #0b0d14;
+$panelColor: rgba(14, 17, 26, 0.97);
+$textColor: #dce8f5;
+$textMuted: rgba(160, 185, 215, 0.55);
+$mainFont: 'Inter', 'Segoe UI', Roboto, sans-serif;
 
-$secondaryColor: rgba(9, 48, 77, 0.55);
-$secondaryColorHighlight: #127caa;
-$secondaryColorLight: rgba(17, 77, 112, 0.45);
-$secondaryColorDark: rgba(4, 25, 45, 0.88);
+$accentColor: #4fc3f7;
+$accentGlow: rgba(79, 195, 247, 0.18);
+$accentDim: rgba(79, 195, 247, 0.08);
+
+$slotBg: rgba(255, 255, 255, 0.04);
+$slotBorder: rgba(255, 255, 255, 0.07);
+$slotHover: rgba(79, 195, 247, 0.10);
+$slotOver: rgba(79, 195, 247, 0.22);
+
+$panelBorder: rgba(255, 255, 255, 0.09);
+$panelShadow: 0 24px 64px rgba(0, 0, 0, 0.65), 0 2px 0 rgba(255,255,255,0.04) inset;
+$highlightBorder: rgba(79, 195, 247, 0.35);
 
 $gridCols: 5;
 $gridRows: 5;
 $gridSize: 10.2vh;
-$gridGap: 2px;
+$gridGap: 3px;
 $containerSize: calc(#{$gridRows} * #{$gridSize + 0.22vh} + #{$gridRows} * #{$gridGap});
 
+// ── Base reset ───────────────────────────────────────────────────────────────
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
-    'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: $mainFont;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100vh;
@@ -50,33 +61,35 @@ input[type='number']::-webkit-outer-spin-button {
   appearance: none;
 }
 
+// ── App shell ────────────────────────────────────────────────────────────────
 .app-wrapper {
   height: 100%;
   width: 100%;
-  color: white;
+  color: $textColor;
   background:
-    radial-gradient(circle at 15% 20%, rgba(23, 146, 201, 0.25), transparent 45%),
-    radial-gradient(circle at 80% 75%, rgba(13, 86, 143, 0.3), transparent 40%);
+    radial-gradient(ellipse at 10% 15%, rgba(30, 80, 140, 0.28) 0%, transparent 55%),
+    radial-gradient(ellipse at 88% 80%, rgba(15, 55, 110, 0.22) 0%, transparent 50%),
+    linear-gradient(160deg, #080b12 0%, #0c0f1a 100%);
 }
 
+// ── Context menu ─────────────────────────────────────────────────────────────
 .context-menu-list {
-  min-width: 200px;
-  background-color: $mainColor;
+  min-width: 190px;
+  background: $panelColor;
   color: $textColor;
-  padding: 4px;
-  border-color: rgba(0, 0, 0, 0.2);
-  border-style: inset;
-  border-width: 1px;
+  padding: 5px;
+  border: 1px solid $panelBorder;
   border-radius: 10px;
-  box-shadow: 0 10px 35px rgba(2, 16, 34, 0.55);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), 0 1px 0 rgba(255,255,255,0.05) inset;
   outline: none;
   display: flex;
   flex-direction: column;
+  gap: 2px;
 }
 
-.context-menu-item  {
-  padding: 8px;
-  border-radius: 4px;
+.context-menu-item {
+  padding: 8px 12px;
+  border-radius: 6px;
   background-color: transparent;
   outline: none;
   border: none;
@@ -84,27 +97,37 @@ input[type='number']::-webkit-outer-spin-button {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-family: $mainFont;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  transition: background 150ms ease, color 150ms ease;
   &:active {
     transform: none;
   }
   &:hover {
-    background-color: $secondaryColorHighlight;
+    background-color: $slotHover;
+    color: $accentColor;
     cursor: pointer;
   }
 }
 
+// ── Tooltip ──────────────────────────────────────────────────────────────────
 .tooltip-description {
-  padding-top: 5px;
+  padding-top: 6px;
+  color: $textMuted;
+  line-height: 1.5;
 }
 
 .tooltip-markdown > p {
   margin: 0;
 }
 
+// ── Buttons ──────────────────────────────────────────────────────────────────
 button:active {
-  transform: translateY(3px);
+  transform: translateY(2px);
 }
 
+// ── Drag preview ─────────────────────────────────────────────────────────────
 .item-drag-preview {
   width: 7.7vh;
   height: 7.7vh;
@@ -117,67 +140,73 @@ button:active {
   background-position: center;
   background-size: 7vh;
   image-rendering: -webkit-optimize-contrast;
+  filter: drop-shadow(0 4px 12px rgba(79, 195, 247, 0.35));
 }
 
+// ── Inventory layout ─────────────────────────────────────────────────────────
 .inventory-wrapper {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   height: 100%;
-
-  gap: 20px;
+  gap: 16px;
 }
 
+// ── Control panel ────────────────────────────────────────────────────────────
 .inventory-control {
   display: flex;
 
   .inventory-control-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     justify-content: center;
     align-items: center;
   }
 
   .inventory-control-input {
-    transition: 200ms;
-    padding: 16px 8px;
+    transition: border-color 180ms ease, box-shadow 180ms ease;
+    padding: 10px 12px;
     border-radius: 8px;
     font-family: $mainFont;
-    font-size: 16px;
+    font-size: 15px;
+    font-weight: 500;
     text-align: center;
     outline: none;
-    border: none;
-    color: #fff;
-    background-color: $secondaryColor;
+    border: 1px solid $panelBorder;
+    color: $textColor;
+    background: rgba(255, 255, 255, 0.05);
+    min-width: 80px;
+    width: auto;
     &:focus-within {
-      background-color: $secondaryColorDark;
-      box-shadow: 0 0 0 1px rgba(95, 199, 255, 0.45);
+      border-color: $highlightBorder;
+      box-shadow: 0 0 0 3px $accentGlow;
     }
   }
 
   .inventory-control-button {
-    font-size: 14px;
-    color: #fff;
-    background-color: $secondaryColor;
-    transition: 200ms;
-    padding: 12px 8px;
-    border-radius: 8px;
-    box-shadow: 0 6px 18px rgba(2, 13, 27, 0.4);
-    border: none;
-    text-transform: uppercase;
-    font-family: $mainFont;
-    width: 100%;
-    font-weight: 500;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    color: $textColor;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid $panelBorder;
+    transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+    min-width: 100px;
+    padding: 10px 16px;
+    cursor: pointer;
     &:hover {
-      background-color: $secondaryColorDark;
+      background: $accentDim;
+      border-color: $highlightBorder;
+      color: $accentColor;
     }
   }
 }
 
+// ── Useful controls dialog ───────────────────────────────────────────────────
 .useful-controls-dialog {
-  background-color: $mainColor;
+  background: $panelColor;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -186,15 +215,16 @@ button:active {
   width: 450px;
   display: flex;
   flex-direction: column;
-  padding: 16px;
-  border-radius: 12px;
-  border: 1px solid rgba(109, 207, 255, 0.22);
-  box-shadow: 0 18px 45px rgba(0, 9, 20, 0.55);
+  padding: 20px;
+  border-radius: 14px;
+  border: 1px solid $panelBorder;
+  box-shadow: $panelShadow;
   gap: 16px;
 }
 
 .useful-controls-dialog-overlay {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
 }
 
 .useful-controls-dialog-title {
@@ -202,20 +232,25 @@ button:active {
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  font-size: 18px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: $textColor;
 }
 
 .useful-controls-dialog-close {
-  width: 25px;
-  height: 25px;
+  width: 26px;
+  height: 26px;
   padding: 6px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 4px;
-  fill: $textColor;
+  border-radius: 6px;
+  fill: $textMuted;
+  transition: background 150ms, fill 150ms;
   &:hover {
-    background-color: $secondaryColorHighlight;
+    background-color: $slotHover;
+    fill: $accentColor;
     cursor: pointer;
   }
 }
@@ -223,32 +258,36 @@ button:active {
 .useful-controls-content-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
 
 .divider {
   width: 100%;
   height: 1px;
-  background-color: rgba(255, 255, 255, 0.12);
+  background: linear-gradient(90deg, transparent, $panelBorder 30%, $panelBorder 70%, transparent);
 }
 
 .useful-controls-button {
   position: absolute !important;
-  bottom: 25px;
-  right: 25px;
-  transition: 200ms !important;
-  border: none;
-  color: white;
-  width: 52px;
-  height: 52px;
+  bottom: 22px;
+  right: 22px;
+  transition: background 180ms ease, box-shadow 180ms ease !important;
+  border: 1px solid $panelBorder !important;
+  color: $textMuted;
+  width: 44px;
+  height: 44px;
   display: flex;
   justify-content: center;
   align-items: center;
-  fill: white;
-  border-radius: 5% !important;
-  background-color: $secondaryColor !important;
+  fill: $textMuted;
+  border-radius: 10px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  cursor: pointer;
   &:hover {
-    background-color: $secondaryColorDark !important;
+    background: $accentDim !important;
+    border-color: $highlightBorder !important;
+    fill: $accentColor;
+    box-shadow: 0 0 14px $accentGlow;
     cursor: pointer;
   }
 }
@@ -257,25 +296,37 @@ button:active {
   position: absolute !important;
   right: 8px;
   top: 8px;
-  border-radius: 2.5% !important;
-  color: grey !important;
+  border-radius: 6px !important;
+  color: $textMuted !important;
 }
 
-// Dialog is used fro useful controls window
-
-
-// inventory grids
+// ── Inventory grid wrapper ────────────────────────────────────────────────────
 .inventory-grid-wrapper {
   display: flex;
   flex-direction: column;
-  gap: calc($gridGap * 2);
+  gap: 10px;
+  background: $panelColor;
+  border: 1px solid $panelBorder;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: $panelShadow;
 }
+
 .inventory-grid-header-wrapper {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   p {
-    font-size: 16px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: $textMuted;
+    &:first-child {
+      color: $textColor;
+      font-size: 14px;
+    }
   }
 }
 
@@ -288,31 +339,31 @@ button:active {
   overflow-y: scroll;
 }
 
-// inventory slots
+// ── Inventory slots ───────────────────────────────────────────────────────────
 .inventory-slot {
-  background-color: $secondaryColor;
+  background-color: $slotBg;
   background-repeat: no-repeat;
   background-position: center;
-  border-radius: 9px;
+  border-radius: 8px;
   image-rendering: -webkit-optimize-contrast;
   position: relative;
   background-size: 7vh;
   color: $textColor;
-  border-color: rgba(108, 198, 255, 0.2);
-  border-style: inset;
-  border-width: 1px;
-  box-shadow: inset 0 1px 0 rgba(185, 234, 255, 0.08);
+  border: 1px solid $slotBorder;
+  transition: border-color 150ms ease, background-color 150ms ease, box-shadow 150ms ease;
+  &:hover {
+    border-color: rgba(79, 195, 247, 0.25);
+    background-color: rgba(79, 195, 247, 0.05);
+  }
 }
 
 .inventory-slot-label-box {
-  background-color: $mainColor;
+  background: rgba(0, 0, 0, 0.55);
   color: $textColor;
   text-align: center;
-  border-bottom-left-radius: 0.25vh;
-  border-bottom-right-radius: 0.25vh;
-  border-top-color: rgba(0, 0, 0, 0.2);
-  border-top-style: inset;
-  border-top-width: 1px;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .inventory-slot-label-text {
@@ -320,21 +371,25 @@ button:active {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 2px 3px;
-  font-weight: 400;
+  padding: 2px 4px;
+  font-weight: 600;
   font-family: $mainFont;
-  font-size: 12px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: rgba(180, 205, 235, 0.7);
 }
 
 .inventory-slot-number {
-  background-color: rgba(168, 234, 255, 0.95);
-  color: #0a2238;
-  height: 12px;
-  border-top-left-radius: 0.25vh;
-  border-bottom-right-radius: 0.25vh;
-  padding: 3px;
-  font-size: 12px;
+  background: $accentColor;
+  color: #05111e;
+  height: 13px;
+  border-top-left-radius: 7px;
+  border-bottom-right-radius: 6px;
+  padding: 2px 5px;
+  font-size: 10px;
+  font-weight: 700;
   font-family: $mainFont;
+  letter-spacing: 0.03em;
 }
 
 .item-slot-wrapper {
@@ -343,7 +398,9 @@ button:active {
   justify-content: space-between;
   height: 100%;
   p {
-    font-size: 12px;
+    font-size: 10px;
+    color: $textMuted;
+    font-weight: 500;
   }
 }
 
@@ -362,10 +419,13 @@ button:active {
   display: flex;
   flex-direction: row;
   align-self: flex-end;
-  padding: 3px;
+  padding: 3px 4px;
   gap: 3px;
   p {
-    font-size: 12px;
+    font-size: 10px;
+    font-weight: 600;
+    color: rgba(200, 220, 245, 0.75);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
   }
 }
 
@@ -374,10 +434,11 @@ button:active {
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  padding-right: 3px;
+  padding-right: 4px;
   p {
-    font-size: 14px;
-    text-shadow: 0.1vh 0.1vh 0 rgba(0, 0, 0, 0.7);
+    font-size: 12px;
+    font-weight: 600;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
   }
 }
 
@@ -385,31 +446,35 @@ button:active {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  padding-right: 3px;
+  padding-right: 4px;
   p {
-    font-size: 14px;
-    text-shadow: 0.1vh 0.1vh 0 rgba(0, 0, 0, 0.7);
+    font-size: 12px;
+    font-weight: 700;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+    letter-spacing: 0.02em;
   }
 }
 
-
+// ── Tooltip ──────────────────────────────────────────────────────────────────
 .tooltip-wrapper {
   pointer-events: none;
   display: flex;
-  background-color: $mainColor;
-  width: 200px;
-  padding: 8px;
+  background: $panelColor;
+  width: 210px;
+  padding: 12px;
   flex-direction: column;
-  min-width: 200px;
+  min-width: 210px;
   color: $textColor;
   font-family: $mainFont;
-  border-radius: 10px;
-  border-color: rgba(0, 0, 0, 0.2);
-  border-style: inset;
-  border-width: 1px;
+  border-radius: 12px;
+  border: 1px solid $panelBorder;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), 0 1px 0 rgba(255,255,255,0.05) inset;
+  gap: 4px;
   p {
     font-size: 12px;
     font-weight: 400;
+    color: $textMuted;
+    line-height: 1.55;
   }
 }
 
@@ -419,8 +484,10 @@ button:active {
   justify-content: space-between;
   align-items: center;
   p {
-    font-size: 15px;
-    font-weight: 400;
+    font-size: 14px;
+    font-weight: 600;
+    color: $textColor;
+    letter-spacing: 0.02em;
   }
 }
 
@@ -429,34 +496,46 @@ button:active {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  gap: 4px;
+  color: $accentColor;
   svg {
-    padding-right: 3px;
+    padding-right: 0;
   }
   p {
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: $accentColor;
   }
 }
 
 .tooltip-ingredients {
-  padding-top: 5px;
+  padding-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .tooltip-ingredient {
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 6px;
   img {
-    width: 28px;
-    height: 28px;
-    padding-right: 5px;
+    width: 26px;
+    height: 26px;
+    padding-right: 0;
+  }
+  p {
+    font-size: 12px;
+    color: $textMuted;
   }
 }
 
-// hotbar
+// ── Hotbar ───────────────────────────────────────────────────────────────────
 .hotbar-container {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
   justify-content: center;
   width: 100%;
   position: absolute;
@@ -467,6 +546,7 @@ button:active {
   @extend .inventory-slot;
   width: $gridSize;
   height: $gridSize;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255,255,255,0.06);
 }
 
 .hotbar-slot-header-wrapper {
@@ -475,13 +555,12 @@ button:active {
   justify-content: space-between;
 }
 
-// item notifications
-
+// ── Item notifications ────────────────────────────────────────────────────────
 .item-notification-container {
   display: flex;
   overflow-x: scroll;
   flex-wrap: nowrap;
-  gap: 2px;
+  gap: 4px;
   position: absolute;
   bottom: 20vh;
   left: 50%;
@@ -492,17 +571,19 @@ button:active {
 
 .item-notification-action-box {
   width: 100%;
-  color: $textColor;
-  background-color: $secondaryColor;
+  color: $accentColor;
+  background: rgba(79, 195, 247, 0.12);
   text-transform: uppercase;
   text-align: center;
-  border-top-left-radius: 0.25vh;
-  border-top-right-radius: 0.25vh;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
   font-family: $mainFont;
+  border-bottom: 1px solid rgba(79, 195, 247, 0.15);
   p {
-    font-size: 11px;
-    padding: 2px;
-    font-weight: 600;
+    font-size: 10px;
+    padding: 3px 4px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
   }
 }
 
@@ -510,29 +591,33 @@ button:active {
   @extend .inventory-slot;
   height: $gridSize;
   width: $gridSize;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
 }
 
+// ── Weight / durability bars ──────────────────────────────────────────────────
 .durability-bar {
-  background: rgba(0, 18, 37, 0.6);
+  background: rgba(0, 0, 0, 0.45);
   height: 3px;
+  border-radius: 2px;
   overflow: hidden;
 }
 
 .weight-bar {
-  background: rgba(2, 28, 54, 0.55);
-  border: 1px inset rgba(118, 209, 255, 0.2);
-  height: 0.8vh;
-  border-radius: 5%;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  height: 5px;
+  border-radius: 10px;
   overflow: hidden;
 }
 
+// ── Transitions ───────────────────────────────────────────────────────────────
 .transition-fade-enter {
   opacity: 0;
 }
 
 .transition-fade-enter-active {
   opacity: 1;
-  transition: opacity 200ms;
+  transition: opacity 180ms ease;
 }
 
 .transition-fade-exit {
@@ -541,23 +626,27 @@ button:active {
 
 .transition-fade-exit-active {
   opacity: 0;
-  transition: opacity 200ms;
+  transition: opacity 180ms ease;
 }
 
 .transition-slide-up-enter {
-  transform: translateY(200px)
+  transform: translateY(200px);
+  opacity: 0;
 }
 
 .transition-slide-up-enter-active {
   transform: translateY(0px);
-  transition: all 200ms;
+  opacity: 1;
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease;
 }
 
 .transition-slide-up-exit {
   transform: translateY(0px);
+  opacity: 1;
 }
 
 .transition-slide-up-exit-active {
   transform: translateY(200px);
-  transition: all 200ms;
+  opacity: 0;
+  transition: transform 200ms ease-in, opacity 160ms ease;
 }
