@@ -1,11 +1,11 @@
-$mainColor: #22232c;
-$textColor: #c1c2c5;
+$mainColor: #081628;
+$textColor: #c9ebff;
 $mainFont: Roboto;
 
-$secondaryColor: rgba(12, 12, 12, 0.4);
-$secondaryColorHighlight: #33343F;
-$secondaryColorLight: rgba(0, 0, 0, 0.5);
-$secondaryColorDark: rgba(12, 12, 12, 0.8);
+$secondaryColor: rgba(9, 48, 77, 0.55);
+$secondaryColorHighlight: #127caa;
+$secondaryColorLight: rgba(17, 77, 112, 0.45);
+$secondaryColorDark: rgba(4, 25, 45, 0.88);
 
 $gridCols: 5;
 $gridRows: 5;
@@ -54,6 +54,9 @@ input[type='number']::-webkit-outer-spin-button {
   height: 100%;
   width: 100%;
   color: white;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(23, 146, 201, 0.25), transparent 45%),
+    radial-gradient(circle at 80% 75%, rgba(13, 86, 143, 0.3), transparent 40%);
 }
 
 .context-menu-list {
@@ -64,7 +67,8 @@ input[type='number']::-webkit-outer-spin-button {
   border-color: rgba(0, 0, 0, 0.2);
   border-style: inset;
   border-width: 1px;
-  border-radius: 4px;
+  border-radius: 10px;
+  box-shadow: 0 10px 35px rgba(2, 16, 34, 0.55);
   outline: none;
   display: flex;
   flex-direction: column;
@@ -139,7 +143,7 @@ button:active {
   .inventory-control-input {
     transition: 200ms;
     padding: 16px 8px;
-    border-radius: 2.5%;
+    border-radius: 8px;
     font-family: $mainFont;
     font-size: 16px;
     text-align: center;
@@ -149,6 +153,7 @@ button:active {
     background-color: $secondaryColor;
     &:focus-within {
       background-color: $secondaryColorDark;
+      box-shadow: 0 0 0 1px rgba(95, 199, 255, 0.45);
     }
   }
 
@@ -158,7 +163,8 @@ button:active {
     background-color: $secondaryColor;
     transition: 200ms;
     padding: 12px 8px;
-    border-radius: 2.5%;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(2, 13, 27, 0.4);
     border: none;
     text-transform: uppercase;
     font-family: $mainFont;
@@ -181,7 +187,9 @@ button:active {
   display: flex;
   flex-direction: column;
   padding: 16px;
-  border-radius: 4px;
+  border-radius: 12px;
+  border: 1px solid rgba(109, 207, 255, 0.22);
+  box-shadow: 0 18px 45px rgba(0, 9, 20, 0.55);
   gap: 16px;
 }
 
@@ -285,14 +293,15 @@ button:active {
   background-color: $secondaryColor;
   background-repeat: no-repeat;
   background-position: center;
-  border-radius: 2.5%;
+  border-radius: 9px;
   image-rendering: -webkit-optimize-contrast;
   position: relative;
   background-size: 7vh;
   color: $textColor;
-  border-color: rgba(0, 0, 0, 0.2);
+  border-color: rgba(108, 198, 255, 0.2);
   border-style: inset;
   border-width: 1px;
+  box-shadow: inset 0 1px 0 rgba(185, 234, 255, 0.08);
 }
 
 .inventory-slot-label-box {
@@ -318,8 +327,8 @@ button:active {
 }
 
 .inventory-slot-number {
-  background-color: white;
-  color: black;
+  background-color: rgba(168, 234, 255, 0.95);
+  color: #0a2238;
   height: 12px;
   border-top-left-radius: 0.25vh;
   border-bottom-right-radius: 0.25vh;
@@ -394,7 +403,7 @@ button:active {
   min-width: 200px;
   color: $textColor;
   font-family: $mainFont;
-  border-radius: 4px;
+  border-radius: 10px;
   border-color: rgba(0, 0, 0, 0.2);
   border-style: inset;
   border-width: 1px;
@@ -504,14 +513,14 @@ button:active {
 }
 
 .durability-bar {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 18, 37, 0.6);
   height: 3px;
   overflow: hidden;
 }
 
 .weight-bar {
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px inset rgba(0, 0, 0, 0.1);
+  background: rgba(2, 28, 54, 0.55);
+  border: 1px inset rgba(118, 209, 255, 0.2);
   height: 0.8vh;
   border-radius: 5%;
   overflow: hidden;
